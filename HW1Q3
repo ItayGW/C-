@@ -1,0 +1,57 @@
+#include <iostream>
+
+char** separateString(const char* input, int& numUpper, int& numLower, int& num) {
+	numUpper = numLower = num = 0;
+	
+    for (int i = 0; input[i] != '\0'; ++i) {
+        if (isupper(input[i])) {
+            numUpper++;
+        }
+        else if (islower(input[i])) {
+            numLower++;
+        }
+        else if (isdigit(input[i])) {
+            num++;
+        }
+    }
+    char** result = new char* [3];
+    result[0] = new char[numUpper + 1];  
+    result[1] = new char[numLower + 1];  
+    result[2] = new char[num + 1];
+
+    for (int i = 0; input[i] != '\0'; ++i) {
+        if (isupper(input[i])) {
+            result[0][numUpper++] = input[i];
+        }
+        else if (islower(input[i])) {
+            result[1][numLower++] = input[i];
+        }
+        else if (isdigit(input[i])) {
+            result[2][num++] = input[i];
+        }
+    }
+
+    result[0][numUpper] = '\0';
+    result[1][numLower] = '\0';
+    result[2][num] = '\0';
+
+    return result;
+
+}
+
+int main() {
+    const char* input = "a1BcDeF3";
+    int numUpper, numLower, num;
+    char** result = separateString(input, numUpper, numLower, num);
+
+    std::cout << "Uppercase letters: " << result[0] << std::endl;
+    std::cout << "Lowercase letters: " << result[1] << std::endl;
+    std::cout << "Digit letters: " << result[2] << std::endl;
+
+    delete[] result[0];
+    delete[] result[1];
+    delete[] result[2];
+    delete[] result;
+
+    return 0;
+}
