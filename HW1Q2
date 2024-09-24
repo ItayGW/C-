@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+
+void initData(char* words[], int* numbers[], int size) {
+	int num = 0;
+	char str[20];
+	int templ = 0;
+	for (int i = 0; i < size; i++) {
+		std::cout << "enter a word: " << std::endl;
+		std::cin >>  str;
+		words[i] = new char[20];
+		strcpy(words[i], str);
+		std::cout << "enter a num: " << std::endl;
+		std::cin >> num;
+		templ = log10(num) + 1;
+		numbers[i] = new int[templ+1];
+		for (int j = 0; j < templ ; j++) {
+			numbers[i][j] = num % 10;
+			num = num / 10;
+		}
+		numbers[i][templ] = -1;
+	}
+}
+
+void common(char* words[], int* numbers[], int size) {
+	int numC[] = {0,0,0,0,0,0,0,0,0,0};
+	char wordC[20];
+	int k = numbers[0][0];
+	int freq = 0;
+	for (int i = 0; i < size; i++) {
+		int count = 0;
+		while (k != -1) {
+			numC[numbers[i][k]]++;
+		}
+		for (int j = i + 1; j < size; j++) {
+			if (words[j] == words[i]) {
+				count++;
+			}
+		}
+		if (count > freq) {
+			freq = count;
+			strcpy(wordC, words[i]);
+		}
+	}
+	int max = 0;
+	for (int d = 0; d < 10; d++) {
+		if (numC[d] > max) {
+			max = d;
+		}
+	}
+	std::cout << "most common word is: " << wordC << std::endl;
+	std::cout << "most common digit is: " << max << std::endl;
+
+}
+
+void clear(char* words[], int* numbers[], int size) {
+	for (int i = 0; i < size; i++) {
+		delete[] &words[i];
+		delete[] &numbers[i];
+	}
+	delete[] words;
+	delete numbers;
+}
+
+
+int main() {
+
+	char* words[3];
+	int* numbers[3];
+	initData(words, numbers, 3);
+	common(words, numbers, 3);
+	clear(words, numbers,3);
+	return 0;
+}
