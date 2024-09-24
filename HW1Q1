@@ -1,0 +1,48 @@
+#include <iostream>
+
+
+void check(int* arr, int size, int num = 0) {
+	int max = 0;
+	int curr = 0;
+	int inx = 0;
+	for (int i = 0; i < size; i++) {
+		if (arr[i] != num) {
+			curr=0;
+		}
+		else {
+			curr++;
+		}
+		if (curr > max) {
+			max = curr;
+			inx = i - max + 1;
+		}
+	}
+	std::cout << "size is " << max << std::endl;
+	std::cout << "index is " << inx << std::endl;
+}
+
+int main() {
+	int size = 0;
+	int size2 = 0;
+	std::cout << "enter size " << std::endl;
+	std::cin >> size;
+	int* arr = new int[size];
+	for (int i = 0; i < size; i++) {
+		std::cout << "enter a num " << std::endl;
+		std::cin >> arr[i];
+	}
+	check(arr,size,1);
+	std::cout << "enter size " << std::endl;
+	std::cin >> size2;
+	int* arr2 = new int[size2];
+	for (int i = 0; i < size2; i++) {
+		std::cout << "enter a num " << std::endl;
+		std::cin >> arr2[i];
+	}
+	check(arr2, 4);
+
+	delete[] arr;
+	delete[] arr2;
+
+	return 0;
+}
